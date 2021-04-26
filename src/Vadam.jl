@@ -3,8 +3,8 @@ module Vadam
 using Flux;
 import Flux.Optimise:  batchmemaybe, update!
 
-include("mill_load\\mill_load.jl")
-export 
+# include("mill_load\\mill_load.jl")
+# export
 
 
 function vadam!(loss,ps,dta,N_data,N_sim=10,σ_init=1.0,α=0.001) #jeste pak jak dodat spravne data
