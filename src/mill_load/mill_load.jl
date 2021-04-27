@@ -18,7 +18,7 @@ function ReadMillData(path)
 end
 
 function ReadMillAndSplit(path)
-	(x_raw, x, y, y_oh) = ReadMillSplit(path)
+	(x_raw, x, y, y_oh) = ReadMilData(path)
 	data=train_val_test_split(x[y.==0],x[y.==1],(0.8,0.0,0.2);contamination=0.5)
 	xt = data[1][1];
 	yt = Flux.onehotbatch((data[1][2].+1)[:],1:2)
