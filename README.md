@@ -4,7 +4,6 @@ This code base is using the Julia Language and [DrWatson](https://juliadynamics.
 to make a reproducible scientific project named
 > Vadam
 
-It is authored by AIC.
 
 To (locally) reproduce this project, do the following:
 
