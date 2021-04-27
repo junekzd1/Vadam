@@ -1,5 +1,6 @@
 using Vadam
-
+using CSV
+using Plots
 
 MI_dir = "C:/Users/Zdenda/Documents/GitHub/MIProblems"
 λ = 0.01
@@ -35,6 +36,36 @@ for dir in dirs
     filename = string(problem,"_NNwidth_sensitivity_lambda_",λ,".csv")
     filepath = joinpath("C:\\Users\\Zdenda\\Documents\\GitHub\\Vadam\\data\\sims\\MIL",filename)
     CSV.write(filepath, results)
+    MLEtemp = results[results.Algo.=="MLE",:]
+    VADtemp = results[results.Algo.=="Vadam",:]
+    titl = string(problem, " data set")
+    plot(MLEtemp.k,MLEtemp.NLL_train,label=:"MLE train error",color=:blue,line=:dashdot,xlabel=:"layer width")
+    plot!(MLEtemp.k,MLEtemp.NLL_test,label=:"MLE test error",color=:blue,line=:dash)
+    plot!(VADtemp.k,VADtemp.NLL_train,label=:"Vadam train error",color=:red,line=:dashdot)
+    plot!(VADtemp.k,VADtemp.NLL_test,label=:"Vadam test error",color=:red,line=:dash)
+    title!("$problem data set")
+    filename_png = string(problem,"_NNwidth_sensitivity_lambda_",λ,".png")
+    filepath_png = joinpath("C:\\Users\\Zdenda\\Documents\\GitHub\\Vadam\\plots\\MIL",filename_png)
+    png(filepath_png)
     #jeste plot dodelat
-    end
+end
+
+for dir in dirs
+    path = dir
+    println(path)
+    problem = splitpath(path)[end]
+    filename = string(problem,"_NNwidth_sensitivity_lambda_",λ,".csv")
+    filepath = joinpath("C:\\Users\\Zdenda\\Documents\\GitHub\\Vadam\\data\\sims\\MIL",filename)
+    CSV.write(filepath, results)
+    MLEtemp = results[results.Algo.=="MLE",:]
+    VADtemp = results[results.Algo.=="Vadam",:]
+    plot(MLEtemp.k,MLEtemp.NLL_train,label=:"MLE train error",color=:blue,line=:dashdot,xlabel=:"layer width")
+    plot!(MLEtemp.k,MLEtemp.NLL_test,label=:"MLE test error",color=:blue,line=:dash)
+    plot!(VADtemp.k,VADtemp.NLL_train,label=:"Vadam train error",color=:red,line=:dashdot)
+    plot!(VADtemp.k,VADtemp.NLL_test,label=:"Vadam test error",color=:red,line=:dash)
+    title!("$problem data set")
+    filename_png = string(problem,"_NNwidth_sensitivity_lambda_",λ,".png")
+    filepath_png = joinpath("C:\\Users\\Zdenda\\Documents\\GitHub\\Vadam\\plots\\MIL",filename_png)
+    png(filepath_png)
+    #jeste plot dodelat
 end
