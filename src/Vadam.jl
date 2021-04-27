@@ -3,8 +3,8 @@ module Vadam
 using Flux;
 import Flux.Optimise:  batchmemaybe, update!
 
-# include("mill_load\\mill_load.jl")
-# export
+include("mill_load\\mill_load.jl")
+export ReadMillData, train_val_test_split, train_val_test_inds, ReadMillAndSplit
 
 
 function vadam!(loss,ps,dta,N_data,N_sim=10,σ_init=1.0,α=0.001) #jeste pak jak dodat spravne data
@@ -38,4 +38,7 @@ function vadam!(loss,ps,dta,N_data,N_sim=10,σ_init=1.0,α=0.001) #jeste pak jak
         @. σ_vad[i] = 1 ./ sqrt.(abs.(N_data .* s[i] .+ λ)) #DAT PRYC ABS!!
     end
     return (μ_vad,σ_vad)
+end
+
+
 end

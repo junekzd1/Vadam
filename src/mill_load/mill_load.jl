@@ -1,5 +1,8 @@
-
-
+using Mill
+using DelimitedFiles
+using StatsBase
+import Base.length
+Base.length(B::BagNode)=length(B.bags.bags)
 
 
 function ReadMillData(path)
@@ -12,6 +15,16 @@ function ReadMillData(path)
 	y_oh = Flux.onehotbatch(y, sort(unique(y)))
 	x = BagNode(ArrayNode(x_raw), bags)
 	return (x_raw, x, y, y_oh)
+end
+
+function ReadMillAndSplit(path)
+	(x_raw, x, y, y_oh) = ReadMillSplit(path)
+	data=train_val_test_split(x[y.==0],x[y.==1],(0.8,0.0,0.2);contamination=0.5)
+	xt = data[1][1];
+	yt = Flux.onehotbatch((data[1][2].+1)[:],1:2)
+	xte = data[3][1];
+	yte = Flux.onehotbatch((data[3][2].+1)[:],1:2)
+	return (xt,yt,xte,yte)
 end
 
 
