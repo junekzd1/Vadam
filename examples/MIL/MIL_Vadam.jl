@@ -2,10 +2,7 @@ using Vadam
 using CSV
 using Plots
 
-MI_dir = "C:/Users/Zdenda/Documents/GitHub/MIProblems"
-λ = 0.01
-k_all = 1:25
-N_iter = 15000
+
 for (root, dirs, files) in walkdir(MI_dir)
     for dir in dirs
         path = joinpath(root, dir)
@@ -26,7 +23,7 @@ end
 
 
 dirs = ["C:/Users/Zdenda/Documents/GitHub/MIProblems/Musk1","C:/Users/Zdenda/Documents/GitHub/MIProblems/Musk2"]
-dirs = ["C:/Users/Zdenda/Documents/GitHub/MIProblems/Tiger"]
+dirs = ["C:/Users/Zdenda/Documents/GitHub/MIProblems/Fox"]
 #Good: Fox, Musk1, Elephant, Mutagenesis1, Newsgroups1, Newsgroups2, Tiger
 problems = ["Fox", "Musk1", "Elephant", "Mutagenesis1", "Newsgroups1", "Newsgroups2", "Tiger"]
 dirs = [string("C:/Users/Zdenda/Documents/GitHub/MIProblems/",a) for a in problems]
