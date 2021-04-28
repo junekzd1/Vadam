@@ -2,21 +2,21 @@ using DataFrames
 using Flux
 using Mill
 
-function sensitivity_nn_width(k_all, λ)
+function sensitivity_nn_width(k_all, λ, nb_features)
 	results = DataFrame(Algo = String[], k = Int[], l=Float64[], NLL_train = Float64[], NLL_test = Float64[])
 	for k ∈ k_all
 		# println(k)
-		push!(results, get_results_mle(k))
-		push!(results, get_results_vadam(k,λ))
+		push!(results, get_results_mle(k,nb_features))
+		push!(results, get_results_vadam(k,λ,nb_features))
 	end
 	return results
 end
 
 
-function get_results_mle(k)
+function get_results_mle(k,nb_features)
 
 	model = BagModel(
-	    ArrayModel(Dense(166, k, Flux.tanh)),                      # model on the level of Flows
+	    ArrayModel(Dense(nb_features, k, Flux.tanh)),                      # model on the level of Flows
 	    meanmax_aggregation(k),                                       # aggregation
 	    ArrayModel(Chain(Dense(2*k+1, k, Flux.tanh), Dense(k, 2))))
 	loss(x, y_oh) = Flux.logitcrossentropy(model(x).data, y_oh)
@@ -37,10 +37,10 @@ function get_results_mle(k)
 
 end
 
-function get_results_vadam(k,λ)
+function get_results_vadam(k,λ,nb_features)
 
 	model = BagModel(
-	    ArrayModel(Dense(166, k, Flux.tanh)),                      # model on the level of Flows
+	    ArrayModel(Dense(nb_features, k, Flux.tanh)),                      # model on the level of Flows
 	    meanmax_aggregation(k),                                       # aggregation
 	    ArrayModel(Chain(Dense(2*k+1, k, Flux.tanh), Dense(k, 2))))
 	loss(x, y_oh) = Flux.logitcrossentropy(model(x).data, y_oh)
