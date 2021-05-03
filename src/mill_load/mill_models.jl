@@ -15,7 +15,7 @@ function sensitivity_nn_width(k_all, λ, nb_features)
 end
 
 
-function get_results_mle(k,nb_features;seed=nothing)
+function get_results_mle(k,dta,nb_features;seed=nothing)
 
 	model = BagModel(
 	    ArrayModel(Dense(nb_features, k, Flux.tanh)),                      # model on the level of Flows
@@ -39,7 +39,7 @@ function get_results_mle(k,nb_features;seed=nothing)
 
 end
 
-function get_results_vadam(k,λ,nb_features;seed=nothing)
+function get_results_vadam(k,λ,dta,N_data,nb_features;seed=nothing)
 
 	model = BagModel(
 	    ArrayModel(Dense(nb_features, k, Flux.tanh)),                      # model on the level of Flows
