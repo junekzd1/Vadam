@@ -23,11 +23,15 @@ MI_dir = "C:/Users/Zdenda/Documents/GitHub/MIProblems/"
 # end
 
 
-dirs = ["C:/Users/Zdenda/Documents/GitHub/MIProblems/Musk1","C:/Users/Zdenda/Documents/GitHub/MIProblems/Musk2"]
-dirs = ["C:/Users/Zdenda/Documents/GitHub/MIProblems/Fox"]
+# dirs = ["C:/Users/Zdenda/Documents/GitHub/MIProblems/Musk1","C:/Users/Zdenda/Documents/GitHub/MIProblems/Musk2"]
+# dirs = ["C:/Users/Zdenda/Documents/GitHub/MIProblems/Fox"]
 #Good: Fox, Musk1, Elephant, Mutagenesis1, Newsgroups1, Newsgroups2, Tiger
 problems = ["Fox", "Musk1", "Elephant", "Mutagenesis1", "Newsgroups1", "Newsgroups2", "Tiger"]
+root_dir = "C:\\Users\\junek\\Documents\\GitHub\\MIProblems\\"
+
 dirs = [string("C:/Users/Zdenda/Documents/GitHub/MIProblems/",a) for a in problems]
+
+
 
 for dir in dirs
     path = dir
