@@ -3,11 +3,11 @@ module Vadam
 using Flux
 import Flux.Optimise:  batchmemaybe, update!
 
-include("mill_load/mill_load.jl")
-export ReadMillData, train_val_test_split, train_val_test_inds, ReadMillAndSplit
+# include("mill_load/mill_load.jl")
+# export ReadMillData, train_val_test_split, train_val_test_inds, ReadMillAndSplit
 
-include("mill_load/mill_models.jl")
-export sensitivity_nn_width, get_results_mle, get_results_vadam
+# include("mill_load/mill_models.jl")
+# export sensitivity_nn_width, get_results_mle, get_results_vadam
 
 
 function vadam!(loss,ps,dta,N_data,λ,N_sim=10,σ_init=1.0,α=0.001) #jeste pak jak dodat spravne data
