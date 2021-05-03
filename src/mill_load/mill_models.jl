@@ -15,7 +15,7 @@ function sensitivity_nn_width(k_all, λ, nb_features)
 end
 
 
-function get_results_mle(k,nb_features)
+function get_results_mle(k,nb_features;seed=nothing)
 
 	model = BagModel(
 	    ArrayModel(Dense(nb_features, k, Flux.tanh)),                      # model on the level of Flows
@@ -35,11 +35,11 @@ function get_results_mle(k,nb_features)
 	NLL_MLE_test = Flux.logitcrossentropy(model(xte).data,yte)
 	algo = "MLE"
 	l = 0
-	return(algo, k, l, NLL_MLE_train, NLL_MLE_test)
+	return(algo, k, l, seed, NLL_MLE_train, NLL_MLE_test)
 
 end
 
-function get_results_vadam(k,λ,nb_features)
+function get_results_vadam(k,λ,nb_features;seed=nothing)
 
 	model = BagModel(
 	    ArrayModel(Dense(nb_features, k, Flux.tanh)),                      # model on the level of Flows
@@ -61,6 +61,6 @@ function get_results_vadam(k,λ,nb_features)
 	NLL_MLE_train = Flux.logitcrossentropy(model(xt).data,yt)
 	NLL_MLE_test = Flux.logitcrossentropy(model(xte).data,yte)
 	algo = "Vadam"
-	return(algo, k, λ, NLL_MLE_train, NLL_MLE_test)
+	return(algo, k, λ, seed, NLL_MLE_train, NLL_MLE_test)
 
 end

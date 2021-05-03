@@ -1,6 +1,7 @@
 using Vadam
 using CSV
 using Plots
+using DataFrames
 
 MI_dir = "C:/Users/Zdenda/Documents/GitHub/MIProblems/"
 
@@ -50,7 +51,7 @@ dicts = dict_list(params_all)
 
 
 N_iter = 15000; opt = ADAM(0.01)
-results = DataFrame(Algo = String[], k = Int[], l=Float64[], seed=Float[], NLL_train = Float64[], NLL_test = Float64[])
+results = DataFrame(Algo = String[], k = Int[], l=Float64[], seed=Float64[], NLL_train = Float64[], NLL_test = Float64[])
 
 for dir in dirs
     path = dir
@@ -60,9 +61,9 @@ for dir in dirs
         (xt,yt,xte,yte, dta) = ReadMillAndSplit(path,N_iter,seed)
         N_data = size(yt)[2]; nb_features = size(xt.data.data)[1]
         for k ∈ k_all
-            push!(results, get_results_mle(k,nb_features))
+            push!(results, get_results_mle(k,nb_features;seed=seed))
             for λ ∈ λ_all 
-                push!(results, get_results_vadam(k,λ,nb_features))
+                push!(results, get_results_vadam(k,λ,nb_features;seed=seed))
             end
             wsave(datadir("sims\\MIL","sim1.jld2"), results)
         end
