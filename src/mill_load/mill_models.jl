@@ -19,8 +19,8 @@ function get_results_mle(k,dta,nb_features;seed=nothing)
 
 	model = BagModel(
 	    ArrayModel(Dense(nb_features, k, Flux.tanh)),                      # model on the level of Flows
-	    meanmax_aggregation(k),                                       # aggregation
-	    ArrayModel(Chain(Dense(2*k+1, k, Flux.tanh), Dense(k, 2))))
+	   SegmentedMeanMax(k),                                       # aggregation
+	    ArrayModel(Chain(Dense(2*k, k, Flux.tanh), Dense(k, 2))))
 	loss(x, y_oh) = Flux.logitcrossentropy(model(x).data, y_oh)
 
 	#mle
@@ -43,8 +43,8 @@ function get_results_vadam(k,λ,dta,N_data,nb_features;seed=nothing)
 
 	model = BagModel(
 	    ArrayModel(Dense(nb_features, k, Flux.tanh)),                      # model on the level of Flows
-	    meanmax_aggregation(k),                                       # aggregation
-	    ArrayModel(Chain(Dense(2*k+1, k, Flux.tanh), Dense(k, 2))))
+	   	SegmentedMeanMax(k),                                       # aggregation
+	    ArrayModel(Chain(Dense(2*k, k, Flux.tanh), Dense(k, 2))))
 	loss(x, y_oh) = Flux.logitcrossentropy(model(x).data, y_oh)
 
 	#mle

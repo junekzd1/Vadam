@@ -1,5 +1,6 @@
 using Mill
 using DelimitedFiles
+using Random 
 using StatsBase
 using Base.Iterators
 import Base.length
