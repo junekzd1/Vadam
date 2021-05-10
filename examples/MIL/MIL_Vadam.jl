@@ -33,6 +33,8 @@ using Flux
 problems = ["Fox", "Musk1", "Elephant", "Mutagenesis1", "Newsgroups1", "Newsgroups2", "Tiger"]
 problems = ["Fox", "Musk1"]
 root_dir = "C:\\Users\\junek\\Documents\\GitHub\\MIProblems\\"
+root_dir = "/home/junek/GitHub/MIProblems/"
+
 
 dirs = [string(root_dir,a) for a in problems];
 k_all = [i for i in 1:25];
@@ -59,22 +61,21 @@ for dir in dirs
     problem = splitpath(path)[end]
     for seed in seed_all
         println("seed: ",seed)
-        (xt,yt,xte,yte, dta) = ReadMillAndSplit(path,N_iter,seed)
-        N_data = size(yt)[2]; nb_features = size(xt.data.data)[1]
+        dta_all = ReadMillAndSplit(path,N_iter,seed)
         for k ∈ k_all
             println("k: ",k)
-            push!(results, get_results_mle(k,dta,nb_features;seed=seed))
+            push!(results, get_results_mle(dta_all,k;opt=opt,seed=seed))
             for λ ∈ λ_all 
                 println("l: ",λ)
-                push!(results, get_results_vadam(k,λ,dta,N_data,nb_features;seed=seed))
+                push!(results, get_results_vadam(dta_all,k,λ;opt=opt,seed=seed))
             end
-            wsave(datadir("sims\\MIL","sim1.jld2"), results)
+            # wsave(datadir("sims\\MIL","sim1.jld2"), results)
         end
     end
     #save results
-    filename = string(problem,"_NNwidth_sensitivity.csv")
-    filepath = joinpath("C:\\Users\\Zdenda\\Documents\\GitHub\\Vadam\\data\\sims\\MIL",filename)
-    CSV.write(filepath, results)
+    # filename = string(problem,"_NNwidth_sensitivity.csv")
+    # filepath = joinpath("C:\\Users\\Zdenda\\Documents\\GitHub\\Vadam\\data\\sims\\MIL",filename)
+    # CSV.write(filepath, results)
 end
 
 
