@@ -7,7 +7,7 @@ include("mill_load/mill_load.jl")
 export ReadMillData, train_val_test_split, train_val_test_inds, ReadMillAndSplit
 
 include("mill_load/mill_models.jl")
-export sensitivity_nn_width, get_results_mle, get_results_vadam
+export sensitivity_nn_width, get_results_mle, get_results_vadam, get_vadam_after_mle
 
 
 function vadam!(loss,ps,dta,N_data,λ,N_sim=10,σ_init=1.0,α=0.001) #jeste pak jak dodat spravne data
