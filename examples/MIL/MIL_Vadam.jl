@@ -32,13 +32,16 @@ using Flux
 
 problems = ["Fox", "Musk1", "Elephant", "Mutagenesis1", "Newsgroups1", "Newsgroups2", "Tiger"]
 problems = ["Fox", "Musk1"]
-root_dir = "C:\\Users\\junek\\Documents\\GitHub\\MIProblems\\"
+# root_dir = "C:\\Users\\junek\\Documents\\GitHub\\MIProblems\\"
 root_dir = "/home/junek/GitHub/MIProblems/"
-
+root_save = datadir()
 
 dirs = [string(root_dir,a) for a in problems];
 k_all = [i for i in 1:25];
+k_all = [10,50,100,200,300,400,500]
 λ_all = [0.001,0.01,0.1,1,10];
+λ_all = [0.01]
+seed_all = [1]
 seed_all = [i for i in 1:10];
 methods = ["MLE","Vadam"];
 
@@ -52,7 +55,7 @@ methods = ["MLE","Vadam"];
 # dicts = dict_list(params_all)
 
 
-N_iter = 15000; opt = ADAM(0.01)
+N_iter = 30000; opt = ADAM(0.01)
 results = DataFrame(Algo = String[], k = Int[], l=Float64[], seed=Float64[], NLL_train = Float64[], NLL_test = Float64[])
 
 for dir in dirs
@@ -62,20 +65,27 @@ for dir in dirs
     for seed in seed_all
         println("seed: ",seed)
         dta_all = ReadMillAndSplit(path,N_iter,seed)
+
         for k ∈ k_all
             println("k: ",k)
-            push!(results, get_results_mle(dta_all,k;opt=opt,seed=seed))
+            # push!(results, get_results_mle(dta_all,k;opt=opt,seed=seed))
             for λ ∈ λ_all 
                 println("l: ",λ)
                 push!(results, get_results_vadam(dta_all,k,λ;opt=opt,seed=seed))
             end
             # wsave(datadir("sims\\MIL","sim1.jld2"), results)
+            filename = string(problem,"_NNwidth_sensitivity_seed_$(seed)_k_$(k)_viciter6.csv")
+            filepath = datadir("sims/MIL",filename)
+            CSV.write(filepath, results)
         end
+        filename = string(problem,"_NNwidth_sensitivity_seed_$(seed)_viciter6.csv")
+        filepath = datadir("sims/MIL",filename)
+        CSV.write(filepath, results)
     end
     #save results
-    # filename = string(problem,"_NNwidth_sensitivity.csv")
-    # filepath = joinpath("C:\\Users\\Zdenda\\Documents\\GitHub\\Vadam\\data\\sims\\MIL",filename)
-    # CSV.write(filepath, results)
+    filename = string(problem,"_NNwidth_sensitivity_viciter6.csv")
+    filepath = datadir("sims/MIL",filename)
+    CSV.write(filepath, results)
 end
 
 
