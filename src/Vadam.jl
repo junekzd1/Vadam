@@ -9,8 +9,7 @@ export ReadMillData, train_val_test_split, train_val_test_inds, ReadMillAndSplit
 include("mill_load/mill_models.jl")
 export sensitivity_nn_width, get_results_mle, get_results_vadam, get_vadam_after_mle
 
-
-function vadam!(loss,ps,dta,N_data,λ,N_sim=10,σ_init=1.0,α=0.001) #jeste pak jak dodat spravne data
+function vadam!(loss,ps,dta,N_data,λ;N_sim=10,σ_init=1.0,α=0.001)
     γ_1 = 0.9; γ_2 = 0.99 #mozna dat jako mozny input?
     μ_vad = deepcopy(ps); s = deepcopy(ps); m = deepcopy(ps)
     map((x)->(x.=σ_init), s)
@@ -44,4 +43,3 @@ function vadam!(loss,ps,dta,N_data,λ,N_sim=10,σ_init=1.0,α=0.001) #jeste pak 
 end
 
 
-end
